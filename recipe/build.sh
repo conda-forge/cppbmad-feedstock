@@ -8,6 +8,7 @@ cmake -S . -B build ${CMAKE_ARGS} \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_PYBMAD=ON \
   -DSKBUILD=OFF \
+  -DPython_EXECUTABLE="$PYTHON" \
   -DVERSION_INFO="${PKG_VERSION}"
 
 cmake --build build -j${CPU_COUNT}
