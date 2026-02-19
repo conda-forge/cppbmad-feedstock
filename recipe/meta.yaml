@@ -29,7 +29,6 @@ requirements:
     - bmad {{ safe_version }} nompi_*
     - python
     - pybind11
-    - pybind11-stubgen
 
 outputs:
   - name: cppbmad
@@ -80,7 +79,6 @@ outputs:
         - bmad {{ safe_version }} nompi_*
         - python
         - pybind11
-        - pybind11-stubgen
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
       run:
         - python
