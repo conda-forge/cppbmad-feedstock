@@ -20,3 +20,7 @@ cmake --install build
 echo "Moving python package from $PREFIX/pybmad to $SP_DIR/pybmad"
 mkdir -p $SP_DIR
 mv $PREFIX/pybmad $SP_DIR/
+
+# TODO: this will be fixed upstream in the next release
+cp python/pybmad/*.pyi $SP_DIR/pybmad
+cp python/pybmad/*.py $SP_DIR/pybmad
