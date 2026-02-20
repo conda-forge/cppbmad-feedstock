@@ -271,6 +271,3 @@ Feedstock Maintainers
 
 * [@ken-lauer](https://github.com/ken-lauer/)
 
-
-<!-- dummy commit to enable rerendering -->
-
