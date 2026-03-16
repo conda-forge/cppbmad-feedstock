@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
-    sha256: 17b4a2a705dc76d4c1c9d40c1ca286f029376c7baaa019aa25a3c320d722b37c
+    sha256: a3360455aafe45156f7d69aa6516c10ea7ed2979e0c3e0f145caae85f8ab58cf
 
 build:
   number: {{ build }}
