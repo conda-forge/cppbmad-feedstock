@@ -31,7 +31,7 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - pybind11                               # [build_platform != target_platform]
   host:
-    - bmad {{ safe_version }} nompi_*
+    - bmad {{ bmad_version }} nompi_*
     - python
     - pybind11
 
@@ -58,9 +58,9 @@ outputs:
         - cmake
         - make
       host:
-        - bmad {{ safe_version }} nompi_*
+        - bmad {{ bmad_version }} nompi_*
       run:
-        - bmad {{ safe_version }}
+        - bmad {{ bmad_version }}
         - libgcc     # [osx]
     test:
       commands:
@@ -81,13 +81,13 @@ outputs:
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - pybind11                               # [build_platform != target_platform]
       host:
-        - bmad {{ safe_version }} nompi_*
+        - bmad {{ bmad_version }} nompi_*
         - python
         - pybind11
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
       run:
         - python
-        - bmad {{ safe_version }}
+        - bmad {{ bmad_version }}
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
         - libgcc     # [osx]
     test:
