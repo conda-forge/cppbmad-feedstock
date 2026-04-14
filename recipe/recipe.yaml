@@ -1,0 +1,130 @@
+schema_version: 1
+
+# Versioning notes:
+# bmad:    YYYYMMDD-M      (build M for the day)
+# cppbmad: YYYYMMDD-M[.N]  (bindings bugfix patch N)
+
+context:
+  version: "20260413-0.1"
+  safe_version: ${{ version | replace("-", ".") }}
+  bmad_version: ${{ version.split(".")[0] | replace("-", ".") }}
+  build: 1
+
+recipe:
+  name: cppbmad-pybmad
+  version: ${{ safe_version }}
+
+source:
+  - url: https://github.com/ken-lauer/cppbmad/archive/${{ version }}.tar.gz
+    sha256: 112dc3d49fa777483749471163a01eed0cbd6e8147fb2dd358bd3286c243edcd
+
+build:
+  number: ${{ build }}
+  skip:
+    - win
+
+requirements:
+  build:
+    - ${{ compiler("cxx") }}
+    - ${{ compiler("fortran") }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - make
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - pybind11
+  host:
+    - bmad ${{ bmad_version }} nompi_*
+    - python
+    - pybind11
+
+outputs:
+  - package:
+      name: cppbmad
+    requirements:
+      run_exports:
+        - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
+      ignore_run_exports:
+        by_name:
+          # cppbmad is independent of Python
+          - python
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("fortran") }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - make
+      host:
+        - bmad ${{ bmad_version }} nompi_*
+      run:
+        - bmad ${{ bmad_version }}
+        - if: osx
+          then:
+            - libgcc
+    build:
+      files:
+        - include/bmad.hpp
+        - include/bmad/*.hpp
+        - include/bmad/*.h
+        - include/bmad/generated/*.hpp
+        - lib/libcppbmad*
+        - lib/cmake/cppbmad
+    tests:
+      - script:
+          - test -f $PREFIX/lib/libcppbmad${SHLIB_EXT}
+          - test -f $PREFIX/include/bmad.hpp
+
+  - package:
+      name: pybmad
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("fortran") }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - make
+        - if: build_platform != target_platform
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - pybind11
+      host:
+        - bmad ${{ bmad_version }} nompi_*
+        - python
+        - pybind11
+        - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
+      run:
+        - python
+        - bmad ${{ bmad_version }}
+        - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
+        - if: osx
+          then:
+            - libgcc
+    build:
+      files:
+        - ${{ SP_DIR }}/pybmad
+    tests:
+      - if: build_platform == target_platform
+        then:
+          - python:
+              imports:
+                - pybmad
+
+about:
+  homepage: https://github.com/ken-lauer/cppbmad
+  license: BSD-3-Clause
+  license_file: LICENSE
+  summary: cppbmad and pybmad are wrappers for Bmad, a relativistic charged-particle dynamics simulations in accelerators and storage rings.
+  description: |
+    cppbmad provides a modern C++ interface to the Fortran Bmad library using
+    proxy classes for direct memory access. It supports tracking and other simulations
+    coordination with wrapped procedures. pybmad uses pybind11 to
+    wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
+  documentation: https://github.com/ken-lauer/cppbmad/wiki
+
+extra:
+  feedstock-name: cppbmad
+  recipe-maintainers:
+    - ken-lauer
