@@ -43,13 +43,6 @@ requirements:
 outputs:
   - package:
       name: cppbmad
-    files:
-      - include/bmad.hpp
-      - include/bmad/*.hpp
-      - include/bmad/*.h
-      - include/bmad/generated/*.hpp
-      - lib/libcppbmad*
-      - lib/cmake/cppbmad
     requirements:
       run_exports:
         - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
@@ -70,6 +63,14 @@ outputs:
         - if: osx
           then:
             - libgcc
+    build:
+      files:
+        - include/bmad.hpp
+        - include/bmad/*.hpp
+        - include/bmad/*.h
+        - include/bmad/generated/*.hpp
+        - lib/libcppbmad*
+        - lib/cmake/cppbmad
     tests:
       - script:
           - test -f $PREFIX/lib/libcppbmad${SHLIB_EXT}
@@ -77,8 +78,6 @@ outputs:
 
   - package:
       name: pybmad
-    files:
-      - ${{ SP_DIR }}/pybmad
     requirements:
       build:
         - ${{ compiler("cxx") }}
@@ -103,6 +102,9 @@ outputs:
         - if: osx
           then:
             - libgcc
+    build:
+      files:
+        - ${{ SP_DIR }}/pybmad
     tests:
       - if: build_platform == target_platform
         then:
