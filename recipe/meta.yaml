@@ -1,6 +1,11 @@
-{% set version = "20260413-0" %}
+{% set version = "20260413-0.1" %}
 {% set safe_version = version | replace("-", ".") %}
+{% set bmad_version = version.split(".")[0] | replace("-", ".") %}
 {% set build = 0 %}
+
+# Versioning notes:
+# bmad:    YYYYMMDD-M      (build M for the day)
+# cppbmad: YYYYMMDD-M[.N]  (bindings bugfix patch N)
 
 package:
   name: cppbmad-pybmad
@@ -8,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
-    sha256: 0bb14b65c087638f04103e753cb81c4451692f6f81b70361fc1923db5f0b4ec7
+    sha256: 112dc3d49fa777483749471163a01eed0cbd6e8147fb2dd358bd3286c243edcd
 
 build:
   number: {{ build }}
@@ -26,7 +31,7 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - pybind11                               # [build_platform != target_platform]
   host:
-    - bmad {{ safe_version }} nompi_*
+    - bmad {{ bmad_version }} nompi_*
     - python
     - pybind11
 
@@ -53,9 +58,9 @@ outputs:
         - cmake
         - make
       host:
-        - bmad {{ safe_version }} nompi_*
+        - bmad {{ bmad_version }} nompi_*
       run:
-        - bmad {{ safe_version }}
+        - bmad {{ bmad_version }}
         - libgcc     # [osx]
     test:
       commands:
@@ -76,13 +81,13 @@ outputs:
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - pybind11                               # [build_platform != target_platform]
       host:
-        - bmad {{ safe_version }} nompi_*
+        - bmad {{ bmad_version }} nompi_*
         - python
         - pybind11
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
       run:
         - python
-        - bmad {{ safe_version }}
+        - bmad {{ bmad_version }}
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
         - libgcc     # [osx]
     test:
