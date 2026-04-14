@@ -10,7 +10,7 @@ context:
   bmad_version: ${{ version.split(".")[0] | replace("-", ".") }}
   build: 1
 
-package:
+recipe:
   name: cppbmad-pybmad
   version: ${{ safe_version }}
 
