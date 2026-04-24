@@ -14,8 +14,6 @@ package:
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
     sha256: ed8e2b723018eed8938400694caf6ec252a2c927290c3568b6c89fc2ad3c5825
-    patches:
-      - cross.patch
 
 build:
   number: {{ build }}
