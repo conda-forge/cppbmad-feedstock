@@ -23,26 +23,28 @@ build:
   skip:
     - win
 
-requirements:
-  build:
-    - ${{ compiler("cxx") }}
-    - ${{ compiler("fortran") }}
-    - ${{ stdlib("c") }}
-    - cmake
-    - make
-    - if: build_platform != target_platform
-      then:
-        - python
-        - cross-python_${{ target_platform }}
-        - pybind11
-  host:
-    - bmad ${{ bmad_version }} nompi_*
-    - python
-    - pybind11
-
 outputs:
+  - staging:
+      name: cppbmad-build
+    requirements:
+      build:
+        - ${{ compiler("cxx") }}
+        - ${{ compiler("fortran") }}
+        - ${{ stdlib("c") }}
+        - cmake
+        - make
+        - if: build_platform != target_platform
+          then:
+            - python
+            - cross-python_${{ target_platform }}
+            - nanobind
+      host:
+        - bmad ${{ bmad_version }} nompi_*
+        - python
+        - nanobind
   - package:
       name: cppbmad
+    inherit: cppbmad-build
     requirements:
       run_exports:
         - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
@@ -78,6 +80,7 @@ outputs:
 
   - package:
       name: pybmad
+    inherit: cppbmad-build
     requirements:
       build:
         - ${{ compiler("cxx") }}
@@ -89,11 +92,11 @@ outputs:
           then:
             - python
             - cross-python_${{ target_platform }}
-            - pybind11
+            - nanobind
       host:
         - bmad ${{ bmad_version }} nompi_*
         - python
-        - pybind11
+        - nanobind
         - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
       run:
         - python
@@ -120,7 +123,7 @@ about:
   description: |
     cppbmad provides a modern C++ interface to the Fortran Bmad library using
     proxy classes for direct memory access. It supports tracking and other simulations
-    coordination with wrapped procedures. pybmad uses pybind11 to
+    coordination with wrapped procedures. pybmad uses nanobind to
     wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
   documentation: https://github.com/ken-lauer/cppbmad/wiki
 
