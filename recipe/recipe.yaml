@@ -33,6 +33,8 @@ outputs:
         - ${{ stdlib("c") }}
         - cmake
         - make
+        # nanobind.stubgen requires typing_extensions for py310
+        - typing_extensions
         - if: build_platform != target_platform
           then:
             - python
