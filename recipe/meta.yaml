@@ -36,6 +36,9 @@ requirements:
     - bmad {{ bmad_version }} nompi_*
     - python
     - nanobind
+    # nanobind.stubgen imports typing_extensions on Python <3.11; the build
+    # script (and stubgen) runs in this top-level host env.
+    - typing_extensions  # [py<311]
 
 outputs:
   - name: cppbmad
