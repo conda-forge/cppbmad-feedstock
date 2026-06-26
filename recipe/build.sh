@@ -4,9 +4,22 @@ export ACC_ROOT_DIR=$BUILD_PREFIX
 
 export FFLAGS="${FFLAGS} -I${PREFIX}/include/bmad"
 
+# Define base CMake arguments
+CMAKE_OPTS="${CMAKE_ARGS}"
+
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" ]]; then
+  # Addresses this error when cross-compiling on macos:
+  # CMake Error at cppbmad-pybmad_1782515104851/_build_env/share/cmake-4.3/Modules/FindPython/Support.cmake:46 (message):
+  #   Python: When cross-compiling, Interpreter and/or Compiler components cannot
+  #   be searched when CMAKE_CROSSCOMPILING_EMULATOR variable is not specified
+  #   (see policy CMP0190).
+
+  CMAKE_OPTS="${CMAKE_OPTS} -DCMAKE_POLICY_DEFAULT_CMP0190=OLD"
+fi
+
 # Note: stubs are generated in the upstream repo, we don't need to regenerate
-# them here (I hope).
-cmake -S . -B build ${CMAKE_ARGS} \
+# them here (I hope; yeah, that's right).
+cmake -S . -B build ${CMAKE_OPTS} \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_PYBMAD=ON \
   -DSKBUILD=OFF \
