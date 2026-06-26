@@ -26,14 +26,14 @@ requirements:
     - {{ stdlib("c") }}
     - cmake
     - make
-    # Cross-compilation requirements for pybind11:
+    # Cross-compilation requirements for nanobind:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - pybind11                               # [build_platform != target_platform]
+    - nanobind                               # [build_platform != target_platform]
   host:
     - bmad {{ bmad_version }} nompi_*
     - python
-    - pybind11
+    - nanobind
 
 outputs:
   - name: cppbmad
@@ -79,11 +79,11 @@ outputs:
         - make
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - pybind11                               # [build_platform != target_platform]
+        - nanobind                               # [build_platform != target_platform]
       host:
         - bmad {{ bmad_version }} nompi_*
         - python
-        - pybind11
+        - nanobind
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
       run:
         - python
@@ -102,7 +102,7 @@ about:
   description: |
     cppbmad provides a modern C++ interface to the Fortran Bmad library using
     proxy classes for direct memory access. It supports tracking and other simulations
-    coordination with wrapped procedures. pybmad uses pybind11 to
+    coordination with wrapped procedures. pybmad uses nanobind to
     wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
   doc_url: https://github.com/ken-lauer/cppbmad/wiki
 
