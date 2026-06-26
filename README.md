@@ -13,7 +13,7 @@ Documentation: https://github.com/ken-lauer/cppbmad/wiki
 
 cppbmad provides a modern C++ interface to the Fortran Bmad library using
 proxy classes for direct memory access. It supports tracking and other simulations
-coordination with wrapped procedures. pybmad uses pybind11 to
+coordination with wrapped procedures. pybmad uses nanobind to
 wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
 
 
