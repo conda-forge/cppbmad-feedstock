@@ -1,4 +1,4 @@
-{% set version = "20260625-0" %}
+{% set version = "20260625-0.1" %}
 {% set safe_version = version | replace("-", ".") %}
 {% set bmad_version = version.split(".")[0] | replace("-", ".") %}
 {% set build = 0 %}
@@ -13,7 +13,11 @@ package:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
-    sha256: 6e642fa35ba9edbcf73835d9d9d8009c04788b4cfb5e7b2606d9a063f94a074e
+    sha256: 7ddafb7021144a06a1245f3df90aa200651b1dc3c383a38c7a75072436c18316
+    patches:
+      # Gate stub generation behind an option, primarily for cross-compilation
+      # TODO: move this patch upstream
+      - 0001-make-stubgen-optional.patch
 
 build:
   number: {{ build }}
@@ -26,14 +30,14 @@ requirements:
     - {{ stdlib("c") }}
     - cmake
     - make
-    # Cross-compilation requirements for pybind11:
+    # Cross-compilation requirements for nanobind:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - pybind11                               # [build_platform != target_platform]
+    - nanobind                               # [build_platform != target_platform]
   host:
     - bmad {{ bmad_version }} nompi_*
     - python
-    - pybind11
+    - nanobind
 
 outputs:
   - name: cppbmad
@@ -79,11 +83,11 @@ outputs:
         - make
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - pybind11                               # [build_platform != target_platform]
+        - nanobind                               # [build_platform != target_platform]
       host:
         - bmad {{ bmad_version }} nompi_*
         - python
-        - pybind11
+        - nanobind
         - {{ pin_subpackage('cppbmad', max_pin="x.x") }}
       run:
         - python
@@ -102,7 +106,7 @@ about:
   description: |
     cppbmad provides a modern C++ interface to the Fortran Bmad library using
     proxy classes for direct memory access. It supports tracking and other simulations
-    coordination with wrapped procedures. pybmad uses pybind11 to
+    coordination with wrapped procedures. pybmad uses nanobind to
     wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
   doc_url: https://github.com/ken-lauer/cppbmad/wiki
 
