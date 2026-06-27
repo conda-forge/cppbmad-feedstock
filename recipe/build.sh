@@ -14,7 +14,7 @@ if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" ]]; then
   #   be searched when CMAKE_CROSSCOMPILING_EMULATOR variable is not specified
   #   (see policy CMP0190).
 
-  CMAKE_OPTS="${CMAKE_OPTS} -DCMAKE_POLICY_DEFAULT_CMP0190=OLD"
+  CMAKE_OPTS="${CMAKE_OPTS} -DCMAKE_CROSSCOMPILING_EMULATOR=env"
 fi
 
 # Note: stubs are generated in the upstream repo, we don't need to regenerate
