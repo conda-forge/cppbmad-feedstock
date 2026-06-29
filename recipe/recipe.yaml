@@ -5,10 +5,10 @@ schema_version: 1
 # cppbmad: YYYYMMDD-M[.N]  (bindings bugfix patch N)
 
 context:
-  version: "20260413-0.1"
+  version: "20260625-0.1"
   safe_version: ${{ version | replace("-", ".") }}
-  bmad_version: ${{ version.split(".")[0] | replace("-", ".") }}
-  build: 1
+  bmad_version: ${{ version | split(".") | first | replace("-", ".") }}
+  build: 0
 
 recipe:
   name: cppbmad-pybmad
@@ -16,7 +16,7 @@ recipe:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/${{ version }}.tar.gz
-    sha256: 112dc3d49fa777483749471163a01eed0cbd6e8147fb2dd358bd3286c243edcd
+    sha256: 7ddafb7021144a06a1245f3df90aa200651b1dc3c383a38c7a75072436c18316
 
 build:
   number: ${{ build }}
@@ -41,7 +41,7 @@ outputs:
             - cross-python_${{ target_platform }}
             - nanobind
       host:
-        - bmad ${{ bmad_version }} nompi_*
+        - bmad ${{ bmad_version }}.* nompi_*
         - python
         - nanobind
   - package:
@@ -61,9 +61,9 @@ outputs:
         - cmake
         - make
       host:
-        - bmad ${{ bmad_version }} nompi_*
+        - bmad ${{ bmad_version }}.* nompi_*
       run:
-        - bmad ${{ bmad_version }}
+        - bmad ${{ bmad_version }}.*
         - if: osx
           then:
             - libgcc
@@ -96,13 +96,13 @@ outputs:
             - cross-python_${{ target_platform }}
             - nanobind
       host:
-        - bmad ${{ bmad_version }} nompi_*
+        - bmad ${{ bmad_version }}.* nompi_*
         - python
         - nanobind
         - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
       run:
         - python
-        - bmad ${{ bmad_version }}
+        - bmad ${{ bmad_version }}.*
         - ${{ pin_subpackage('cppbmad', upper_bound="x.x") }}
         - if: osx
           then:
