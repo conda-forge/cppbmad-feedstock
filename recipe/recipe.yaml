@@ -17,6 +17,8 @@ recipe:
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/${{ version }}.tar.gz
     sha256: 7ddafb7021144a06a1245f3df90aa200651b1dc3c383a38c7a75072436c18316
+    patches:
+      - 0001-make-stubgen-optional.patch
 
 build:
   number: ${{ build }}
