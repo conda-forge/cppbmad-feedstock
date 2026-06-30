@@ -109,7 +109,7 @@ outputs:
             - libgcc
     build:
       files:
-        - ${{ SP_DIR }}/pybmad
+        - lib/python*/site-packages/pybmad/**
     tests:
       - if: build_platform == target_platform
         then:
