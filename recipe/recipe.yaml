@@ -8,7 +8,7 @@ context:
   version: "20260625-0.1"
   safe_version: ${{ version | replace("-", ".") }}
   bmad_version: ${{ version | split(".") | first | replace("-", ".") }}
-  build: 0
+  build: 1
 
 recipe:
   name: cppbmad-pybmad
