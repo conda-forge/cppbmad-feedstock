@@ -14,10 +14,6 @@ package:
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
     sha256: 2984e12938569bdadd5294d614a629e1fce14f3293e6e554bec8fa2cf33ad028
-    patches:
-      # Gate stub generation behind an option, primarily for cross-compilation
-      # TODO: move this patch upstream
-      - 0001-make-stubgen-optional.patch
 
 build:
   number: {{ build }}
