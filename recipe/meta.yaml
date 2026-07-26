@@ -1,4 +1,4 @@
-{% set version = "20260713-0" %}
+{% set version = "20260724-0" %}
 {% set safe_version = version | replace("-", ".") %}
 {% set bmad_version = version.split(".")[0] | replace("-", ".") %}
 {% set build = 0 %}
@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/{{ version }}.tar.gz
-    sha256: 010bdf8447e75550e3be40ffbc43ecb012f41054eeffcb104719d08086606118
+    sha256: dd34c990bc08244fd3ad00109a7bc0d4046c049e0725495828466b210fe90b02
 
 build:
   number: {{ build }}
