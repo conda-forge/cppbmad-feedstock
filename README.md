@@ -3,7 +3,7 @@ About cppbmad-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/cppbmad-feedstock/blob/main/LICENSE.txt)
 
-Home: github.com/ken-lauer/cppbmad
+Home: https://github.com/ken-lauer/cppbmad
 
 Package license: BSD-3-Clause
 
@@ -15,7 +15,6 @@ cppbmad provides a modern C++ interface to the Fortran Bmad library using
 proxy classes for direct memory access. It supports tracking and other simulations
 coordination with wrapped procedures. pybmad uses nanobind to
 wrap the C++ layer, exposing the Bmad and Tao ecosystems to Python.
-
 
 Current build status
 ====================
