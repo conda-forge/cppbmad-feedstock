@@ -5,10 +5,10 @@ schema_version: 1
 # cppbmad: YYYYMMDD-M[.N]  (bindings bugfix patch N)
 
 context:
-  version: "20260802-0"
+  version: "20260804-0"
   safe_version: ${{ version | replace("-", ".") }}
   bmad_version: ${{ version | split(".") | first | replace("-", ".") }}
-  build: 1
+  build: 0
 
 recipe:
   name: cppbmad-pybmad
@@ -16,7 +16,7 @@ recipe:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/${{ version }}.tar.gz
-    sha256: 5b95cd0c18f964dea20ad59d554434569b0f330b53c8ad6f80fbec7af2414ff3
+    sha256: df5b13ea426865fc75f336d4519ccadaeb0bf346d282cd478ca509abd0f067f1
 
 build:
   number: ${{ build }}
