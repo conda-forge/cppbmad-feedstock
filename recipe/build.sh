@@ -1,6 +1,8 @@
 #!/bin/bash
 
 export ACC_ROOT_DIR=$BUILD_PREFIX
+export ACC_CONDA_BUILD=Y
+export ACC_CONDA_PATH=$PREFIX
 
 export FFLAGS="${FFLAGS} -I${PREFIX}/include/bmad"
 
