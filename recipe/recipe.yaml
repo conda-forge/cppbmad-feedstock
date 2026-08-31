@@ -39,11 +39,11 @@ outputs:
           then:
             - python
             - cross-python_${{ target_platform }}
-            - nanobind
+            - nanobind >=2.0,<3.0
       host:
         - bmad ${{ bmad_version }}.* nompi_*
         - python
-        - nanobind
+        - nanobind >=2.0,<3.0
   - package:
       name: cppbmad
     inherit: cppbmad-build
