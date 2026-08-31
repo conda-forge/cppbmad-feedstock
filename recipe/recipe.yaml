@@ -5,7 +5,7 @@ schema_version: 1
 # cppbmad: YYYYMMDD-M[.N]  (bindings bugfix patch N)
 
 context:
-  version: "20260824-0"
+  version: "20260828-0"
   safe_version: ${{ version | replace("-", ".") }}
   bmad_version: ${{ version | split(".") | first | replace("-", ".") }}
   build: 0
@@ -16,7 +16,7 @@ recipe:
 
 source:
   - url: https://github.com/ken-lauer/cppbmad/archive/${{ version }}.tar.gz
-    sha256: 2979d452413bd5abcab92a885a38525a0fec21a11bd719085a9b195114a0fcd8
+    sha256: a0795429cfa028990085c0a3df5dcf5fd100de2390823c5e8d8a5f0a658aac00
 
 build:
   number: ${{ build }}
@@ -39,11 +39,11 @@ outputs:
           then:
             - python
             - cross-python_${{ target_platform }}
-            - nanobind
+            - nanobind >=2.0,<3.0
       host:
         - bmad ${{ bmad_version }}.* nompi_*
         - python
-        - nanobind
+        - nanobind >=2.0,<3.0
   - package:
       name: cppbmad
     inherit: cppbmad-build
